@@ -15,8 +15,6 @@ const { class: clazz } = Astro.props;
 		<title>{SITE_TITLE} — v{pkg.version}</title>
 
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={pkg.description} />
-		<meta name="" content={pkg.description} />
 		<link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
 		<link
 			rel="sitemap"
@@ -24,10 +22,6 @@ const { class: clazz } = Astro.props;
 			href={url('sitemap-index.xml')}
 		/>
 
-		<meta
-			name="author"
-			content="Julian Cataldo, Zoltán Szőgyényi, Robert Tanislav"
-		/>
 		<meta name="copyright" content="MIT" />
 
 		<script is:inline>
