@@ -1,4 +1,4 @@
 /* — Operations — */
 
-export * from './products.js';
+export * from './academy.js';
 export * from './users.js';
