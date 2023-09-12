@@ -1,12 +1,10 @@
-// FetchService.js
 export const fetchData = async () => {
 	try {
 		const response = await fetch('http://localhost:8000/api/academy');
-		const data = await response.json();
-		return data;
+		return await response.json();
 	} catch (error) {
 		console.error('There was an error fetching data', error);
-		return null;
+		return error;
 	}
 };
 
@@ -19,10 +17,9 @@ export const postData = async (payload: any) => {
 			},
 			body: JSON.stringify(payload),
 		});
-		const data = await response.json();
-		return data;
+		return await response.json();
 	} catch (error) {
 		console.error('There was an error posting data', error);
-		return null;
+		return error;
 	}
 };

@@ -1,6 +1,3 @@
-/* eslint-disable no-param-reassign */
-
-import type { Endpoint } from '../types/entities.js';
 import { fetchData } from '../lib/data.js';
 import { endpointsToOperations } from '../pages/api/[...entity].js';
 
@@ -11,7 +8,7 @@ export class CrudEntities extends HTMLElement {
 
 	#refreshButton = this.querySelector('[data-refresh]');
 
-	type: Endpoint | undefined;
+	type: any | undefined;
 
 	constructor() {
 		super();
@@ -20,12 +17,9 @@ export class CrudEntities extends HTMLElement {
 		if (
 			Object.keys(endpointsToOperations).find((endpoint) => endpoint === type)
 		)
-			this.type = type as Endpoint;
-		else throw Error('Wrong CRUD type!');
-
-		this.#refreshButton?.addEventListener('click', () => {
-			this.update().catch(() => undefined);
-		});
+			this.#refreshButton?.addEventListener('click', () => {
+				this.update().catch(() => undefined);
+			});
 	}
 
 	/**

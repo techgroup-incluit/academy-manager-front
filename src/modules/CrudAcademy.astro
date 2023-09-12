@@ -1,9 +1,25 @@
 ---
 import NavPagination from '../components/NavPagination.astro';
-import { fetchData } from '../services/academy';
+import { fetchData, postData } from '../services/academy';
 import { Academy } from '../types/academy';
 
 const academies: Academy[] = await fetchData();
+
+async function createAcademy(event) {
+  console.log('🚀 -> createAcademy -> event:', event);
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+  const payload = {
+    name: formData.get("name"),
+    description: formData.get("description")
+  };
+
+  const newAcademy = await postData(payload);
+  if (newAcademy) {
+    academies.push(newAcademy);
+  }
+}
 ---
 
 <entities-crud type="academy">
@@ -312,7 +328,7 @@ const academies: Academy[] = await fetchData();
 		<a
 			href="#"
 			class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 border border-gray-200 font-medium inline-flex items-center rounded-lg text-sm px-3 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-			data-modal-toggle="delete-academy-modal"
+			
 		>
 			No, cancelar
 		</a>
@@ -351,25 +367,23 @@ const academies: Academy[] = await fetchData();
 			>
 			<span class="sr-only">Cerrar menu</span>
 		</button>
-		<form action="#">
+		<form @submit={createAcademy}>
 			<div class="space-y-4">
 				<div>
 					<label
 						for="name"
 						class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-						>Nombre</label
-					>
+						>Nombre
+						</label>
 					<input
-						type="text"
-						name="title"
-						id="name"
+					id="name"
+					name="name"
+					type="text"
 						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
 						placeholder="Agrega el nuevo nombre"
 						required=""
 					/>
 				</div>
-
-				
 				<div>
 					<label
 						for="description"
@@ -378,6 +392,7 @@ const academies: Academy[] = await fetchData();
 					>
 					<textarea
 						id="description"
+						name="description"
 						rows="4"
 						class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
 						placeholder="Agrega la descripcion"></textarea>

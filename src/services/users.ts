@@ -1,8 +1,4 @@
-import { RANDOMIZE } from '../app/constants.js';
-
-import type { Users } from '../types/entities.js';
-
-export function getUsers(randomize = RANDOMIZE) {
+export function getUsers(randomize = '') {
 	console.log('getUsers');
 	return null;
 }
