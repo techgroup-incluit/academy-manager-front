@@ -9,7 +9,7 @@ const DEV_PORT = 8080;
 export default defineConfig({
 	site: `http://localhost:${DEV_PORT}`,
 	base: undefined,
-	output: 'server',
+	// output: 'hybrid',
 	server: {
 		port: DEV_PORT,
 	},

@@ -6,7 +6,6 @@ import { Academy } from '../types/academy';
 const academies: Academy[] = await fetchData();
 
 async function createAcademy(event) {
-  console.log('🚀 -> createAcademy -> event:', event);
   event.preventDefault();
 
   const formData = new FormData(event.target);
@@ -49,7 +48,6 @@ async function createAcademy(event) {
 								Inicio
 							</a>
 						</li>
-
 						<li>
 							<div class="flex items-center">
 								<svg
@@ -435,7 +433,3 @@ async function createAcademy(event) {
 
 	<NavPagination />
 </entities-crud>
-
-<script>
-	import './CrudEntities.client.js';
-</script>
