@@ -1,14 +1,14 @@
 <script>
   import { onMount } from 'svelte';
   import NavPagination from '../../components/NavPagination.svelte';
-  import { fetchData } from '../../services/academy';
-  import CreateAcademy from './Create.svelte';
-  import DeleteAcademy from './Delete.svelte';
+  import { fetchData } from '../../services/teacher';
+  import CreateTeacher from './Create.svelte';
+  import DeleteTeacher from './Delete.svelte';
 
-  let academies = [];
+  let teacher = [];
 
   onMount(async () => {
-    academies = await fetchData();
+    teacher = await fetchData();
   });
 </script>
 
@@ -66,12 +66,12 @@
 			<div class="items-center justify-between block sm:flex">
 				<div class="flex items-center mb-4 sm:mb-0">
 					<form class="sm:pr-3" action="#" method="GET">
-						<label for="academy-search" class="sr-only">Buscar</label>
+						<label for="teacher-search" class="sr-only">Buscar</label>
 						<div class="relative w-48 mt-1 sm:w-64 xl:w-96">
 							<input
 								type="text"
 								name="email"
-								id="academy-search"
+								id="teacher-search"
 								class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
 								placeholder="Buscar por academia"
 							/>
@@ -103,12 +103,12 @@
 						Refrescar
 					</button>
 					<button
-						id="createAcademyButton"
+						id="createTeacherButton"
 						class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 						type="button"
-						data-drawer-target="drawer-create-academy-default"
-						data-drawer-show="drawer-create-academy-default"
-						aria-controls="drawer-create-academy-default"
+						data-drawer-target="drawer-create-teacher-default"
+						data-drawer-show="drawer-create-teacher-default"
+						aria-controls="drawer-create-teacher-default"
 						data-drawer-placement="right"
 					>
 						<svg
@@ -149,7 +149,7 @@
 									</div>
 								</th>
 
-								{#each ['ID', 'Nombre', 'Descripcion', 'Activo', 'Acciones'] as th}
+								{#each ['ID', 'Nombre', 'Apellido', 'Activo', 'Acciones'] as th}
 								<th
 									scope="col"
 									class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
@@ -164,31 +164,33 @@
 						<tbody
 							class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
 						>
-							{#each academies as academy}
+							{#each teacher as teacher}
 									<tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
 										<td class="w-4 p-4">
 											<div class="flex items-center">
 												<input
-													id={`checkbox-${academy.id}`}
+													id={`checkbox-${teacher.id}`}
 													aria-describedby="checkbox-1"
 													type="checkbox"
 													class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
 												/>
-												<label for={`checkbox-${academy.id}`} class="sr-only">
+												<label for={`checkbox-${teacher.id}`} class="sr-only">
 													checkbox
 												</label>
 											</div>
 										</td>
 										<td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-											#<data value="id">{academy.id}</data>
+											#<data value="id">{teacher.id}</data>
 										</td>
 										<td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
 											<div class="text-base font-semibold text-gray-900 dark:text-white">
-												<data value="name">{academy.name}</data>
+												<data value="firstName">{teacher.firstName}</data>
 											</div>
 										</td>
-										<td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-											<data value="description">{academy.description}</data>
+										<td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+											<div class="text-base font-semibold text-gray-900 dark:text-white">
+												<data value="lastName">{teacher.lastName}</data>
+											</div>
 										</td>
 										<td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
 											<input id="default-checkbox" type="checkbox" checked class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -198,10 +200,10 @@
 										<td class="p-4 space-x-2 whitespace-nowrap">
 											<!-- <button
 												type="button"
-												id="updateAcademyButton"
-												data-drawer-target="drawer-update-academy-default"
-												data-drawer-show="drawer-update-academy-default"
-												aria-controls="drawer-update-academy-default"
+												id="updateTeacherButton"
+												data-drawer-target="drawer-update-teacher-default"
+												data-drawer-show="drawer-update-teacher-default"
+												aria-controls="drawer-update-teacher-default"
 												data-drawer-placement="right"
 												class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 											>
@@ -224,10 +226,10 @@
 											</button>-->
 											<button
 												type="button"
-												id="deleteAcademyButton"
-												data-drawer-target="drawer-delete-academy-default"
-												data-drawer-show="drawer-delete-academy-default"
-												aria-controls="drawer-delete-academy-default"
+												id="deleteTeacherButton"
+												data-drawer-target="drawer-delete-teacher-default"
+												data-drawer-show="drawer-delete-teacher-default"
+												aria-controls="drawer-delete-teacher-default"
 												data-drawer-placement="right"
 												class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
 											>
@@ -245,7 +247,7 @@
 												</svg>
 												Borrar
 											</button>
-											<DeleteAcademy></DeleteAcademy>
+											<DeleteTeacher></DeleteTeacher>
 										</td>
 									</tr>
 							{/each}
@@ -255,7 +257,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- Add Academy Drawer -->
-	<CreateAcademy></CreateAcademy>
+	<!-- Add Teacher Drawer -->
+	<CreateTeacher></CreateTeacher>
 
 	<NavPagination />
