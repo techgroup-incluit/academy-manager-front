@@ -51,7 +51,7 @@
 								>
 								<span
 									class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500"
-									aria-current="page">Academia</span
+									aria-current="page">Profesor</span
 								>
 							</div>
 						</li>
@@ -60,7 +60,7 @@
 				<h1
 					class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
 				>
-					Todas las academias
+					Todos los profesores
 				</h1>
 			</div>
 			<div class="items-center justify-between block sm:flex">
@@ -73,7 +73,7 @@
 								name="email"
 								id="teacher-search"
 								class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-								placeholder="Buscar por academia"
+								placeholder="Buscar por profesor"
 							/>
 						</div>
 					</form>
@@ -121,7 +121,7 @@
 								d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
 								clip-rule="evenodd"></path></svg
 						>
-						Agregar una academia
+						Agregar un profesor
 					</button>
 				</div>
 			</div>
