@@ -6,7 +6,7 @@
   } catch (error) {
     console.log('Error in posting data', error);
   }
-	}
+}
 </script>
 	<!-- Delete Academy Drawer -->
 	<form on:submit|preventDefault={handleSubmit}>

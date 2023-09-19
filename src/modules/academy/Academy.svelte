@@ -1,12 +1,17 @@
----
-import NavPagination from '../../components/NavPagination.astro';
-import { fetchData } from '../../services/academy';
-import { Academy } from '../../types/academy';
-import CreateAcademy from './CreateAcademy.svelte';
-import DeleteAcademy from './DeleteAcademy.svelte';
+<script>
+  import { onMount } from 'svelte';
+  import NavPagination from '../../components/NavPagination.svelte';
+  import { fetchData } from '../../services/academy';
+  import CreateAcademy from './CreateAcademy.svelte';
+  import DeleteAcademy from './DeleteAcademy.svelte';
 
-const academies: Academy[] = await fetchData();
----
+  let academies = [];
+
+  onMount(async () => {
+    academies = await fetchData();
+  });
+</script>
+
 	<div
 		class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700"
 	>
@@ -145,24 +150,22 @@ const academies: Academy[] = await fetchData();
 									</div>
 								</th>
 
-								{
-									['ID', 'Nombre', 'Descripcion', 'Activo', 'Acciones'].map((th) => (
-										<th
-											scope="col"
-											class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
-										>
-											{th}
-										</th>
-									))
-								}
+								{#each ['ID', 'Nombre', 'Descripcion', 'Activo', 'Acciones'] as th}
+								<th
+									scope="col"
+									class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
+								>
+									{th}
+								</th>
+							{/each}
+							
 							</tr>
 						</thead>
 
 						<tbody
 							class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
 						>
-							{
-								academies.map((academy: Academy) => (
+							{#each academies as academy}
 									<tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
 										<td class="w-4 p-4">
 											<div class="flex items-center">
@@ -243,11 +246,10 @@ const academies: Academy[] = await fetchData();
 												</svg>
 												Borrar
 											</button>
-											<DeleteAcademy client:load></DeleteAcademy>
+											<DeleteAcademy></DeleteAcademy>
 										</td>
 									</tr>
-								))
-							}
+							{/each}
 						</tbody>
 					</table>
 				</div>
@@ -255,6 +257,6 @@ const academies: Academy[] = await fetchData();
 		</div>
 	</div>
 	<!-- Add Academy Drawer -->
-	<CreateAcademy client:load></CreateAcademy>
+	<CreateAcademy></CreateAcademy>
 
 	<NavPagination />
