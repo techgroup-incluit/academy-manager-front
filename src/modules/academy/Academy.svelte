@@ -22,8 +22,7 @@
 						class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2"
 					>
 						<li class="inline-flex items-center">
-							<a
-								href="#"
+							<button
 								class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white"
 							>
 								<svg
@@ -36,7 +35,7 @@
 									></path></svg
 								>
 								Inicio
-							</a>
+							</button>
 						</li>
 						<li>
 							<div class="flex items-center">
