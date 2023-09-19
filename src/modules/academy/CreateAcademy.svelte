@@ -1,10 +1,23 @@
 <script>
+	import { postData } from '../../services/academy'
+
 	let name = '';
   let description = '';
 
-	function handleSubmit() {
-		console.log(`Name: ${name}, Description: ${description}`);
-	}
+	async function handleSubmit() {
+  const payload = {
+    name,
+    description,
+  };
+  
+  try {
+    const result = await postData(payload);
+    console.log('Data posted successfully', result);
+		window.location.reload()
+  } catch (error) {
+    console.log('Error in posting data', error);
+  }
+}
 </script>
 
 <div
