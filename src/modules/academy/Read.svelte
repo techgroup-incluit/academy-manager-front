@@ -2,8 +2,8 @@
   import { onMount } from 'svelte';
   import NavPagination from '../../components/NavPagination.svelte';
   import { fetchData } from '../../services/academy';
-  import CreateAcademy from './CreateAcademy.svelte';
-  import DeleteAcademy from './DeleteAcademy.svelte';
+  import CreateAcademy from './Create.svelte';
+  import DeleteAcademy from './Delete.svelte';
 
   let academies = [];
 
