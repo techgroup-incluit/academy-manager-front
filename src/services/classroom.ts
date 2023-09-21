@@ -1,6 +1,6 @@
 export const fetchData = async () => {
 	try {
-		const response = await fetch('http://localhost:8000/api/academy');
+		const response = await fetch('http://localhost:8000/api/classroom');
 		return await response.json();
 	} catch (error) {
 		console.error('There was an error fetching data', error);
@@ -8,19 +8,19 @@ export const fetchData = async () => {
 	}
 };
 
-export const fetchAcademyById = async (id: string) => {
+export const fetchClassroomById = async (id: string) => {
   try {
-    const response = await fetch(`http://localhost:8000/api/academy/${id}`);
+    const response = await fetch(`http://localhost:8000/api/classroom/${id}`);
     return await response.json();
   } catch (error) {
-    console.error(`There was an error fetching academy data for ID: ${id}`, error);
+    console.error(`There was an error fetching classroom data for ID: ${id}`, error);
     return error;
   }
 };
 
 export const postData = async (payload: any) => {
 	try {
-		const response = await fetch('http://localhost:8000/api/academy', {
+		const response = await fetch('http://localhost:8000/api/classroom', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const postData = async (payload: any) => {
 
 export const deleteData = async (id: string) => {
 	try {
-		const response = await fetch(`http://localhost:8000/api/academy/${id}`, {
+		const response = await fetch(`http://localhost:8000/api/classroom/${id}`, {
 			method: 'DELETE',
 		});
 

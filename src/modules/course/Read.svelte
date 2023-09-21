@@ -2,15 +2,29 @@
   import { onMount } from 'svelte';
   import NavPagination from '../../components/NavPagination.svelte';
   import { fetchData } from '../../services/course';
+  import { fetchClassroomById } from '../../services/classroom';
+  import { fetchAcademyById } from '../../services/academy';
   import CreateCourse from './Create.svelte';
   import DeleteCourse from './Delete.svelte';
 
 	let courses = [];
-	let selectedCourseId = null;
 
-  const loadData = async () => {
-    courses = await fetchData();
-  };
+	let selectedCourseId = null;
+	let academyMap = {};
+	let classroomMap = {};
+
+const loadData = async () => {
+	  courses = await fetchData();
+		academyMap = Object.fromEntries(
+			await Promise.all(courses.map(async ({ academyId }) => [academyId, await fetchAcademyById(academyId)]))
+		);
+		console.log('🚀 -> loadData -> academyMap:', academyMap);
+		
+		classroomMap = Object.fromEntries(
+			await Promise.all(courses.map(async ({ classroomId }) => [classroomId, await fetchClassroomById(classroomId)]))
+		);
+		console.log('🚀 -> loadData -> classroomMap:', classroomMap);
+	};
 
   onMount(() => {
     loadData();
@@ -198,17 +212,17 @@ function openDeleteDrawer(id) {
 										</td>
 										<td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
 											<div class="text-base font-semibold text-gray-900 dark:text-white">
-												<data value="firstName">{course.firstName}</data>
+												<data value="section">{course.section}</data>
 											</div>
 										</td>
 										<td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
 											<div class="text-base font-semibold text-gray-900 dark:text-white">
-												<data value="lastName">{course.lastName}</data>
+												<data value="academyId">{academyMap[course.academyId]?.name || 'Cargando...'}</data>
 											</div>
 										</td>
 										<td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
 											<div class="text-base font-semibold text-gray-900 dark:text-white">
-												<data value="academyName">{course.academyName}</data>
+												<data value="classroomId">{classroomMap[course.classroomId]?.name || 'Cargando...'}</data>
 											</div>
 										</td>
 										<td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
