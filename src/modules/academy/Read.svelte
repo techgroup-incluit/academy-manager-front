@@ -6,19 +6,26 @@
   import DeleteAcademy from './Delete.svelte';
 
   let academies = [];
+	let selectedAcademyId = null;
 
-  onMount(async () => {
+  const loadData = async () => {
     academies = await fetchData();
+  };
+
+  onMount(() => {
+    loadData();
   });
 
-	let selectedAcademyId = null;
+  const refreshData = () => {
+    loadData();
+  };
 
 function openDeleteDrawer(id) {
 	selectedAcademyId = id;
-	// Trigger a custom event, you can also pass the id if needed
 	const event = new CustomEvent('deleteClicked', { detail: { id } });
 	document.dispatchEvent(event);
 }
+
 </script>
 
 	<div
@@ -91,6 +98,7 @@ function openDeleteDrawer(id) {
 				<div class="flex items-center ml-auto space-x-2 sm:space-x-3">
 					<button
 						type="button"
+						on:click={refreshData}
 						data-refresh
 						class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 					>

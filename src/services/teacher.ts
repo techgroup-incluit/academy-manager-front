@@ -23,3 +23,16 @@ export const postData = async (payload: any) => {
 		return error;
 	}
 };
+
+export const deleteData = async (id: string) => {
+	try {
+		const response = await fetch(`http://localhost:8000/api/teacher/${id}`, {
+			method: 'DELETE',
+		});
+
+		return response.status === 204 ? response : await response.json();
+	} catch (error) {
+		console.error('There was an error deleting data', error);
+		return error;
+	}
+}

@@ -1,15 +1,23 @@
 <script>
-	import { postData } from '../../services/teacher'
+  import { onMount } from 'svelte';
+  import { postData } from '../../services/teacher';
+  import { fetchData } from '../../services/academy'; 
 
-	let firstName = '';
+  let firstName = '';
   let lastName = '';
+  let academies = []; 
+  let academyId; 
 
-	async function handleSubmit() {
-  const payload = {
-    firstName,
-    lastName,
-  };
-  console.log('🚀 -> handleSubmit -> payload:', payload);
+  onMount(async () => {
+    academies = await fetchData();
+  });
+
+  async function handleSubmit() {
+    const payload = {
+      firstName,
+      lastName,
+      academyId 
+    };
   
   try {
     const result = await postData(payload);
@@ -86,6 +94,15 @@
 						placeholder="Agrega el nuevo apellido"
 						required=""
 					/>
+				</div>
+				<div>
+					<label for="academy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Academia</label>
+					<select id="academy" bind:value={academyId} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+						<option value="">Seleccione una academia</option>
+						{#each academies as academy}
+							<option value={academy.id}>{academy.name}</option>
+						{/each}
+					</select>
 				</div>
 				
 				<div

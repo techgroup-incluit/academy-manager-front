@@ -1,17 +1,25 @@
 <script>
-	async function handleSubmit() {
-		try {
-			// TODO: Implement delete academy
-		window.location.reload()
-  } catch (error) {
-    console.log('Error in posting data', error);
+	import { deleteData } from '../../services/teacher';
+  export let selectedTeacherId;
+
+	 async function handleSubmit() {
+    try {
+			const response = await deleteData(selectedTeacherId);
+
+			if (response.status === 204) {
+				console.log('Teacher deleted successfully')
+				window.location.reload();
+			}
+    } catch (error) {
+      console.log('Error in posting data', error);
+    }
   }
-}
+
 </script>
-	<!-- Delete Academy Drawer -->
+	<!-- Delete Teacher Drawer -->
 	<form on:submit|preventDefault={handleSubmit}>
 	<div
-		id="drawer-delete-academy-default"
+		id="drawer-delete-teacher-default"
 		class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform translate-x-full bg-white dark:bg-gray-800"
 		tabindex="-1"
 		aria-labelledby="drawer-label"
@@ -25,8 +33,8 @@
 		</h5>
 		<button
 			type="button"
-			data-drawer-dismiss="drawer-delete-academy-default"
-			aria-controls="drawer-delete-academy-default"
+			data-drawer-dismiss="drawer-delete-teacher-default"
+			aria-controls="drawer-delete-teacher-default"
 			class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
 		>
 			<svg

@@ -5,11 +5,26 @@
   import CreateTeacher from './Create.svelte';
   import DeleteTeacher from './Delete.svelte';
 
-  let teacher = [];
+	let teachers = [];
+	let selectedTeacherId = null;
 
-  onMount(async () => {
-    teacher = await fetchData();
+  const loadData = async () => {
+    teachers = await fetchData();
+  };
+
+  onMount(() => {
+    loadData();
   });
+
+  const refreshData = () => {
+    loadData();
+  };
+
+function openDeleteDrawer(id) {
+	selectedTeacherId = id;
+	const event = new CustomEvent('deleteClicked', { detail: { id } });
+	document.dispatchEvent(event);
+}
 </script>
 
 	<div
@@ -82,6 +97,7 @@
 				<div class="flex items-center ml-auto space-x-2 sm:space-x-3">
 					<button
 						type="button"
+						on:click={refreshData}
 						data-refresh
 						class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
 					>
@@ -149,7 +165,7 @@
 									</div>
 								</th>
 
-								{#each ['ID', 'Nombre', 'Apellido', 'Activo', 'Acciones'] as th}
+								{#each ['ID', 'Nombre', 'Apellido', 'Academia', 'Activo', 'Acciones'] as th}
 								<th
 									scope="col"
 									class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
@@ -164,7 +180,7 @@
 						<tbody
 							class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
 						>
-							{#each teacher as teacher}
+							{#each teachers as teacher}
 									<tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
 										<td class="w-4 p-4">
 											<div class="flex items-center">
@@ -190,6 +206,11 @@
 										<td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
 											<div class="text-base font-semibold text-gray-900 dark:text-white">
 												<data value="lastName">{teacher.lastName}</data>
+											</div>
+										</td>
+										<td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+											<div class="text-base font-semibold text-gray-900 dark:text-white">
+												<data value="academyName">{teacher.academyName}</data>
 											</div>
 										</td>
 										<td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
@@ -227,6 +248,7 @@
 											<button
 												type="button"
 												id="deleteTeacherButton"
+												on:click={() => openDeleteDrawer(teacher.id)}
 												data-drawer-target="drawer-delete-teacher-default"
 												data-drawer-show="drawer-delete-teacher-default"
 												aria-controls="drawer-delete-teacher-default"
@@ -247,7 +269,6 @@
 												</svg>
 												Borrar
 											</button>
-											<DeleteTeacher></DeleteTeacher>
 										</td>
 									</tr>
 							{/each}
@@ -257,7 +278,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- Add Teacher Drawer -->
+	
 	<CreateTeacher></CreateTeacher>
-
+	<DeleteTeacher {selectedTeacherId}></DeleteTeacher>
 	<NavPagination />
