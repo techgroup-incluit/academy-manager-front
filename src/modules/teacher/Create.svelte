@@ -95,7 +95,7 @@
 						required=""
 					/>
 				</div>
-				<div>
+				<!-- <div>
 					<label for="academy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Academia</label>
 					<select id="academy" bind:value={academyId} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
 						<option value="">Seleccione una academia</option>
@@ -103,7 +103,20 @@
 							<option value={academy.id}>{academy.name}</option>
 						{/each}
 					</select>
-				</div>
+				</div> -->
+
+
+
+				<label for="academy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Academia</label>
+				<select 
+						id="academy" 
+						bind:value={academyId} 
+						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+						<option value="">Seleccione una academia</option>
+						{#each academies as academy}
+								<option value={academy.id}>{academy.name}</option>
+						{/each}
+				</select>
 				
 				<div
 					class="bottom-0 left-0 flex justify-center w-full pb-4 space-x-4 md:px-4 md:absolute"
