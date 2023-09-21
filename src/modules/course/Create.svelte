@@ -1,22 +1,25 @@
 <script>
   import { onMount } from 'svelte';
-  import { postData } from '../../services/teacher';
+  import { postData } from '../../services/course';
   import { fetchData } from '../../services/academy'; 
+  import { fetchData as fetchDataClassroom } from '../../services/classroom'; 
 
-  let firstName = '';
-  let lastName = '';
+  let section = '';
   let academies = []; 
+  let classrooms = []; 
   let academyId; 
+  let classroomId; 
 
   onMount(async () => {
     academies = await fetchData();
+    classrooms = await fetchDataClassroom();
   });
 
   async function handleSubmit() {
     const payload = {
-      firstName,
-      lastName,
-      academyId 
+      section,
+      academyId,
+      classroomId,
     };
   
   try {
@@ -30,7 +33,7 @@
 </script>
 
 <div
-		id="drawer-create-teacher-default"
+		id="drawer-create-course-default"
 		class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform translate-x-full bg-white dark:bg-gray-800"
 		tabindex="-1"
 		aria-labelledby="drawer-label"
@@ -40,12 +43,12 @@
 			id="drawer-label"
 			class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400"
 		>
-			Nuevo Profesor
+			Nuevo curso
 		</h5>
 		<button
 			type="button"
-			data-drawer-dismiss="drawer-create-teacher-default"
-			aria-controls="drawer-create-teacher-default"
+			data-drawer-dismiss="drawer-create-course-default"
+			aria-controls="drawer-create-course-default"
 			class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
 		>
 			<svg
@@ -65,48 +68,20 @@
 			<div class="space-y-4">
 				<div>
 					<label
-						for="firstName"
+						for="section"
 						class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-						>Nombre
+						>Sección
 						</label>
 					<input
-					id="firstName"
-					name="firstName"
+					id="section"
+					name="section"
 					type="text"
-					bind:value={firstName}
+					bind:value={section}
 						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-						placeholder="Agrega el nuevo nombre"
+						placeholder="Agrega la nueva sección"
 						required=""
 					/>
 				</div>
-				<div>
-					<label
-						for="lastName"
-						class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-						>Apellido
-						</label>
-					<input
-					id="lastName"
-					name="lastName"
-					type="text"
-					bind:value={lastName}
-						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-						placeholder="Agrega el nuevo apellido"
-						required=""
-					/>
-				</div>
-				<!-- <div>
-					<label for="academy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Academia</label>
-					<select id="academy" bind:value={academyId} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-						<option value="">Seleccione una academia</option>
-						{#each academies as academy}
-							<option value={academy.id}>{academy.name}</option>
-						{/each}
-					</select>
-				</div> -->
-
-
-
 				<label for="academy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Academia</label>
 				<select 
 						id="academy" 
@@ -117,7 +92,16 @@
 								<option value={academy.id}>{academy.name}</option>
 						{/each}
 				</select>
-				
+				<label for="classroom" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Aula</label>
+				<select 
+						id="classroom" 
+						bind:value={classroomId} 
+						class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+						<option value="">Seleccione un aula</option>
+						{#each classrooms as classroom}
+								<option value={classroom.id}>Aula Nº: {classroom.number} | Capacidad: {classroom.capacity}</option>
+						{/each}
+				</select>
 				<div
 					class="bottom-0 left-0 flex justify-center w-full pb-4 space-x-4 md:px-4 md:absolute"
 				>
@@ -129,8 +113,8 @@
 					</button>
 					<button
 						type="button"
-						data-drawer-dismiss="drawer-create-teacher-default"
-						aria-controls="drawer-create-teacher-default"
+						data-drawer-dismiss="drawer-create-course-default"
+						aria-controls="drawer-create-course-default"
 						class="inline-flex w-full justify-center text-gray-500 items-center bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
 					>
 						<svg
