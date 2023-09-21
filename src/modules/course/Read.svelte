@@ -179,7 +179,7 @@ function openDeleteDrawer(id) {
 									</div>
 								</th>
 
-								{#each ['ID', 'Sección', 'Academia', 'Aula', 'Activo', 'Acciones'] as th}
+								{#each ['ID', 'Sección', 'Academia', 'Aula Nº', 'Activo', 'Acciones'] as th}
 								<th
 									scope="col"
 									class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
@@ -222,7 +222,7 @@ function openDeleteDrawer(id) {
 										</td>
 										<td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
 											<div class="text-base font-semibold text-gray-900 dark:text-white">
-												<data value="classroomId">{classroomMap[course.classroomId]?.name || 'Cargando...'}</data>
+												<data value="classroomId">{JSON.stringify(classroomMap[course.classroomId]?.number) || 'Cargando...'}</data>
 											</div>
 										</td>
 										<td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
