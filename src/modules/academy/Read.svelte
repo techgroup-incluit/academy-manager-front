@@ -10,6 +10,15 @@
   onMount(async () => {
     academies = await fetchData();
   });
+
+	let selectedAcademyId = null;
+
+function openDeleteDrawer(id) {
+	selectedAcademyId = id;
+	// Trigger a custom event, you can also pass the id if needed
+	const event = new CustomEvent('deleteClicked', { detail: { id } });
+	document.dispatchEvent(event);
+}
 </script>
 
 	<div
@@ -225,6 +234,7 @@
 											<button
 												type="button"
 												id="deleteAcademyButton"
+												on:click={() => openDeleteDrawer(academy.id)}
 												data-drawer-target="drawer-delete-academy-default"
 												data-drawer-show="drawer-delete-academy-default"
 												aria-controls="drawer-delete-academy-default"
@@ -245,7 +255,6 @@
 												</svg>
 												Borrar
 											</button>
-											<DeleteAcademy></DeleteAcademy>
 										</td>
 									</tr>
 							{/each}
@@ -255,7 +264,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- Add Academy Drawer -->
-	<CreateAcademy></CreateAcademy>
 
+	<CreateAcademy></CreateAcademy>
+	<DeleteAcademy {selectedAcademyId}></DeleteAcademy>
 	<NavPagination />

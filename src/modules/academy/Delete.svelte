@@ -1,12 +1,20 @@
 <script>
-	async function handleSubmit() {
-		try {
-			// TODO: Implement delete academy
-		window.location.reload()
-  } catch (error) {
-    console.log('Error in posting data', error);
+	import { deleteData } from '../../services/academy';
+  export let selectedAcademyId;
+
+	 async function handleSubmit() {
+    try {
+			const response = await deleteData(selectedAcademyId);
+
+			if (response.status === 204) {
+				console.log('Academy deleted successfully')
+				window.location.reload();
+			}
+    } catch (error) {
+      console.log('Error in posting data', error);
+    }
   }
-}
+
 </script>
 	<!-- Delete Academy Drawer -->
 	<form on:submit|preventDefault={handleSubmit}>
